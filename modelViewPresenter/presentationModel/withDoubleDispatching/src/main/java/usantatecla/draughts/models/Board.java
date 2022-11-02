@@ -37,16 +37,17 @@ class Board {
 
         Piece piece = this.getPiece(origin);
         this.putPiece(origin, Piece.NULL);
-        if(piece.isFinalRow(target)) {
+        if (piece.isFinalRow(target)) {
             piece = new Draught(piece.getColor());
         }
         this.putPiece(target, piece);
         this.removePiecesInBetween(origin, target);
     }
 
-    
-    boolean isEmpty(Coordinate coordinate) {
-        return this.getPiece(coordinate).isNull();
+    Piece getPiece(Coordinate coordinate) {
+        assert !coordinate.isNull();
+
+        return this.pieces[coordinate.getRow()][coordinate.getColumn()];
     }
 
     void putPiece(Coordinate coordinate, Piece piece) {
@@ -64,45 +65,34 @@ class Board {
         }
     }
 
-    Piece getPiece(Coordinate coordinate) {
-        assert !coordinate.isNull();
-
-        return this.pieces[coordinate.getRow()][coordinate.getColumn()];
-    }
-
-    char getCode(Coordinate coordinate) {
-        return this.getPiece(coordinate).getCode();
-    }
-
     Error getTargetError(Coordinate origin, Coordinate target) {
         if (!this.isEmpty(target)) {
             return Error.NOT_EMPTY;
         }
-        if (this.areColleaguePiecesInBetween(origin, target)){
+        if (this.areColleaguePiecesInBetween(origin, target)) {
             return Error.COLLEAGUE_EATING;
         }
-        List<Piece> pieces = this.getPiecesInBetween(origin, target);
-        if (pieces.size() == 1) {
-            return this.getPiece(origin).getJumpTargetError(origin, target);
-        } else if (pieces.size() == 0) {
-            return this.getPiece(origin).getMoveTargetError(origin, target);
-        } else {
-            return Error.TOO_MUCH_EATINGS;
+        switch (this.getPiecesInBetween(origin, target).size()) {
+            case 0:
+                return this.getPiece(origin).getMoveTargetError(origin, target);
+            case 1:
+                return this.getPiece(origin).getJumpTargetError(origin, target);
+            default:
+                return Error.TOO_MUCH_EATINGS;
         }
     }
 
+    boolean isEmpty(Coordinate coordinate) {
+        return this.getPiece(coordinate).isNull();
+    }
+
     private boolean areColleaguePiecesInBetween(Coordinate origin, Coordinate target) {
-        List<Piece> pieces = this.getPiecesInBetween(origin, target);
-        for (Piece piece : pieces) {
-            if(piece.getColor() == this.getColor(origin)){
+        for (Piece piece : this.getPiecesInBetween(origin, target)) {
+            if (piece.getColor() == this.getColor(origin)) {
                 return true;
             }
         }
         return false;
-    }
-
-    Color getColor(Coordinate coordinate) {
-        return this.getPiece(coordinate).getColor();
     }
 
     private List<Piece> getPiecesInBetween(Coordinate origin, Coordinate target) {
@@ -119,8 +109,14 @@ class Board {
     }
 
     boolean isFinished(Color activeColor) {
-        return this.isWinner(activeColor) ||
-         (this.isBlocked(activeColor) && this.isBlocked(activeColor.opposite()));
+        if (this.isWinner(activeColor)) {
+            return true;
+        }
+        for(Color color : Color.getColors()){
+            if (!this.isBlocked(color))
+                return false;
+        }
+        return true;
     }
 
     boolean isWinner(Color activeColor) {
@@ -155,6 +151,14 @@ class Board {
             }
         }
         return true;
+    }
+
+    char getCode(Coordinate coordinate) {
+        return this.getPiece(coordinate).getCode();
+    }
+
+    Color getColor(Coordinate coordinate) {
+        return this.getPiece(coordinate).getColor();
     }
 
     @Override

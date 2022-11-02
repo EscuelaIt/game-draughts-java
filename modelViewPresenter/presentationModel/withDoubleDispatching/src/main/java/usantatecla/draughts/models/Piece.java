@@ -16,16 +16,17 @@ public abstract class Piece {
 
 	Piece(Color color) {
 		assert color != null;
+
 		this.color = color;
 	}
 
 	abstract boolean isNull();
 
-	Error getMoveTargetError(Coordinate origin, Coordinate target) {
+	protected Error getMoveTargetError(Coordinate origin, Coordinate target) {
 		if (this.isTooFarMove(origin, target)) {
 			return Error.TOO_FAR;
 		}
-		return getNotValidWayError(origin, target);
+		return this.getNotValidWayError(origin, target);
 	}
 
 	protected abstract boolean isTooFarMove(Coordinate origin, Coordinate target);

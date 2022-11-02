@@ -29,10 +29,7 @@ public class PlayController extends Controller {
     }
 
     public void movePiece(Coordinate origin, Coordinate target) {
-        this.game.movePiece(
-                new Coordinate(origin.getRow(), origin.getColumn()),
-                new Coordinate(target.getRow(), target.getColumn())
-        );
+        this.game.movePiece(origin, target);
     }
 
     public Error getOriginError(Coordinate coordinate) {

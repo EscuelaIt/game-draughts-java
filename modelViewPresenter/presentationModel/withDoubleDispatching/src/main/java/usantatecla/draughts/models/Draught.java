@@ -12,22 +12,7 @@ public class Draught extends Piece {
     Draught(Color color) {
         super(color);
     }
-
-    @Override
-    protected boolean isTooFarMove(Coordinate origin, Coordinate target) {
-        return false;
-    }
-
-    @Override
-    protected boolean isTooFarJump(Coordinate origin, Coordinate target) {
-        return false;
-    }
-
-    @Override
-    protected boolean isFinalRow(Coordinate coordinate) {
-        return false;
-    }
-
+    
     @Override
     protected List<ConcreteCoordinate> getChildOrthogonalVectors() {
         List<ConcreteCoordinate> orthogonalVectors = new ArrayList<>();
@@ -43,8 +28,18 @@ public class Draught extends Piece {
     }
 
     @Override
-    public char getCode() {
-        return Character.toUpperCase(super.getCode());
+    protected boolean isTooFarMove(Coordinate origin, Coordinate target) {
+        return false;
+    }
+
+    @Override
+    protected boolean isTooFarJump(Coordinate origin, Coordinate target) {
+        return false;
+    }
+
+    @Override
+    protected boolean isFinalRow(Coordinate coordinate) {
+        return false;
     }
 
     @Override
