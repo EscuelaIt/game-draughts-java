@@ -1,16 +1,18 @@
 package usantatecla.draughts.models;
 
-/*public class GameTest {
+// import usantatecla.draughts.types.Color;
 
-    protected Game game;
-    protected Game expectedGame;
+// public class GameTest {
 
-    protected void setGame(Color color, String... strings) {
-        this.game = new GameBuilder().color(color).rows(strings).build();
-    }
+//     protected Game game;
+//     protected Game expectedGame;
 
-    protected void setExpectedGame(Color color, String... strings) {
-        this.expectedGame = new GameBuilder().color(color).rows(strings).build();
-    }
+//     protected void setGame(Color color, String... strings) {
+//         this.game = new GameBuilder().color(color).rows(strings).build();
+//     }
 
-}*/
+//     protected void setExpectedGame(Color color, String... strings) {
+//         this.expectedGame = new GameBuilder().color(color).rows(strings).build();
+//     }
+
+// }

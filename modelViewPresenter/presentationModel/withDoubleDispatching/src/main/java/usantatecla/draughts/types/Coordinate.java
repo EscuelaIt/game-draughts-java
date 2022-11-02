@@ -43,7 +43,7 @@ public class Coordinate extends SquareBoundedCoordinate {
     }
 
     @Override
-    protected int getDimension() {
+    public int getDimension() {
         return Coordinate.DIMENSION;
     }
 
